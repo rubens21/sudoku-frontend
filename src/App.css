@@ -1,42 +1,10 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 #sudoku-board {
+  color: #9a551d;
   max-width: 300px;
   padding: 19px 29px 29px;
   margin: 0 auto 20px;
   background-color: #fff;
-  border: 1px solid #e5e5e5;
+  border: 2px solid #9a551d;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
@@ -45,6 +13,9 @@
   box-shadow: 0 1px 2px rgba(0,0,0,.05);
 }
 
+#error {
+  width: 400px;
+}
 
 #sudoku-board td:nth-child(n+4):not(:nth-child(n+7)){
 background-color: #ced4da;

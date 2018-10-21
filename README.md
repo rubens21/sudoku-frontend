@@ -73,4 +73,4 @@ $ npm start
 ```
 
 ## Usage
-Open [http://localhost].
+Open [http://localhost](http://localhost).

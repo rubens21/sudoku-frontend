@@ -52,7 +52,8 @@ class App extends Component {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
-      return <div>{RenderBoard(numbers)}<button onClick={this.refreshBoard}>Reload</button></div>;
+      return <div class="text-center">{RenderBoard(numbers)}<button type="button" id="reload-button" class="btn btn-warning" onClick={this.refreshBoard}>Reload</button></div>;
+
     }
   }
 
@@ -61,16 +62,16 @@ class App extends Component {
 function RenderBoard(numbers) {
   let rows = [];
   for (let i = 0; i < 9; i++){
-    let rowID = `row${i}`;
+    // let rowID = `row${i}`;
     let cell = [];
     const indexPot = 9 * i;
     for (let idx = 0; idx < 9; idx++){
       let cellID = `cell${i}-${idx}`;
-      cell.push(<td key={cellID} id={cellID}>{numbers[idx+indexPot]}</td>)
+      cell.push(<td key={cellID} id={cellID}><div class="sudoku-number">{numbers[idx+indexPot]}</div></td>)
     }
-    rows.push(<tr key={i} id={rowID}>{cell}</tr>)
+    rows.push(<tr class="sudoku-box" key={i}>{cell}</tr>)
   }
-  return <table id="simple-board">
+  return <table class="table table-bordered" id="sudoku-board">
     <tbody>
     {rows}
     </tbody>

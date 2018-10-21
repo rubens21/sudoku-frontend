@@ -22,7 +22,7 @@ class App extends Component {
       state.error = null
       state.isLoaded = false
     });
-    this.forceUpdate()
+    this.forceUpdate();
     this.loadNewBoard()
   }
 
@@ -62,6 +62,26 @@ class App extends Component {
   componentDidMount() {
     this.loadNewBoard()
   }
+  renderBoard(numbers) {
+    let rows = [];
+    for (let i = 0; i < 9; i++) {
+      // let rowID = `row${i}`;
+      let cell = [];
+      const indexPot = 9 * i;
+      for (let idx = 0; idx < 9; idx++) {
+        let cellID = `cell${i}-${idx}`;
+        cell.push(<td key={cellID} id={cellID}>
+          <div class="sudoku-number">{numbers[idx + indexPot]}</div>
+        </td>)
+      }
+      rows.push(<tr class="sudoku-box" key={i}>{cell}</tr>)
+    }
+    return <table class="table table-bordered" id="sudoku-board">
+      <tbody>
+      {rows}
+      </tbody>
+    </table>
+  }
 
   render() {
     const {error, isLoaded, numbers} = this.state;
@@ -82,36 +102,14 @@ class App extends Component {
     } else if (!isLoaded) {
       html = <div id="loader"><img src={spinner}/><h1>Loading...</h1></div>;
     } else {
-      html = <di>{RenderBoard(numbers)}
+      html = <di>{this.renderBoard(numbers)}
         {reloadButton}
       </di>
 
     }
     return <div className="text-center">{html}</div>;
   }
-
 }
 
-function RenderBoard(numbers) {
-  let rows = [];
-  for (let i = 0; i < 9; i++) {
-    // let rowID = `row${i}`;
-    let cell = [];
-    const indexPot = 9 * i;
-    for (let idx = 0; idx < 9; idx++) {
-      let cellID = `cell${i}-${idx}`;
-      cell.push(<td key={cellID} id={cellID}>
-        <div class="sudoku-number">{numbers[idx + indexPot]}</div>
-      </td>)
-    }
-    rows.push(<tr class="sudoku-box" key={i}>{cell}</tr>)
-  }
-  return <table class="table table-bordered" id="sudoku-board">
-    <tbody>
-    {rows}
-    </tbody>
-  </table>
-
-}
 
 export default App;

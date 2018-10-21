@@ -11,8 +11,13 @@ class App extends Component {
       isLoaded: false,
       numbers: []
     };
+    this.refreshBoard = this.refreshBoard.bind(this);
   }
 
+  refreshBoard(e) {
+    e.preventDefault();
+    this.loadNewBoard()
+  }
   loadNewBoard() {
     fetch(BACKEND)
       .then(res => res.json())
@@ -47,7 +52,7 @@ class App extends Component {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
-      return RenderBoard(numbers);
+      return <div>{RenderBoard(numbers)}<button onClick={this.refreshBoard}>Reload</button></div>;
     }
   }
 
@@ -69,7 +74,8 @@ function RenderBoard(numbers) {
     <tbody>
     {rows}
     </tbody>
-  </table>;
+  </table>
+
 }
 
 export default App;

@@ -30,8 +30,10 @@ class App extends Component {
     let error = {
       message: "Oops! I am good on Sudoku, but I am not that good as a developer :p"
     };
-    fetch(BACKEND)
-      .then(res => {
+    fetch(BACKEND).catch(e => {
+      error.message = "The request has failed. Is the backend reachable?";
+      throw e
+    }).then(res => {
         if (!res.ok) {
           if (res.status === 502) {
             error.message = "Come on... it's not that hard setting the backend up, did you read the readme file?"

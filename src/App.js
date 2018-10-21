@@ -2,16 +2,19 @@ import React, {Component} from 'react';
 import './App.css';
 import spinner from './spinner.gif'
 import errorImg from './error-broken.png'
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 
+Enzyme.configure({ adapter: new Adapter() });
 const BACKEND = `http://localhost/sudoku/board`;
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: null,
-      isLoaded: false,
-      numbers: []
+      error: props.error !== undefined ? props.error :  null,
+      isLoaded: props.isLoaded !== undefined ? props.isLoaded : false,
+      numbers: props.numbers !== undefined ? props.numbers : []
     };
     this.refreshBoard = this.refreshBoard.bind(this);
   }
@@ -19,7 +22,7 @@ class App extends Component {
   refreshBoard(e) {
     e.preventDefault();
     this.setState(state => {
-      state.error = null
+      state.error = null;
       state.isLoaded = false
     });
     this.forceUpdate();
@@ -30,7 +33,7 @@ class App extends Component {
     let error = {
       message: "Oops! I am good on Sudoku, but I am not that good as a developer :p"
     };
-    fetch(BACKEND).catch(e => {
+    return fetch(BACKEND).catch(e => {
       error.message = "The request has failed. Is the backend reachable?";
       throw e
     }).then(res => {
@@ -64,7 +67,7 @@ class App extends Component {
   componentDidMount() {
     this.loadNewBoard()
   }
-  renderBoard(numbers) {
+  renderBoard() {
     let rows = [];
     for (let i = 0; i < 9; i++) {
       // let rowID = `row${i}`;
@@ -73,12 +76,12 @@ class App extends Component {
       for (let idx = 0; idx < 9; idx++) {
         let cellID = `cell${i}-${idx}`;
         cell.push(<td key={cellID} id={cellID}>
-          <div class="sudoku-number">{numbers[idx + indexPot]}</div>
+          <div className="sudoku-number">{this.state.numbers[idx + indexPot]}</div>
         </td>)
       }
-      rows.push(<tr class="sudoku-box" key={i}>{cell}</tr>)
+      rows.push(<tr className="sudoku-box" key={i}>{cell}</tr>)
     }
-    return <table class="table table-bordered" id="sudoku-board">
+    return <table className="table table-bordered" id="sudoku-board">
       <tbody>
       {rows}
       </tbody>
@@ -86,7 +89,7 @@ class App extends Component {
   }
 
   render() {
-    const {error, isLoaded, numbers} = this.state;
+    const {error, isLoaded} = this.state;
     let html = "";
     let reloadButton = <button type="button" id="reload-button" className="btn btn-warning"
                                onClick={this.refreshBoard}>Reload</button>
@@ -104,7 +107,8 @@ class App extends Component {
     } else if (!isLoaded) {
       html = <div id="loader"><img src={spinner}/><h1>Loading...</h1></div>;
     } else {
-      html = <di>{this.renderBoard(numbers)}
+
+      html = <di>{this.renderBoard()}
         {reloadButton}
       </di>
 

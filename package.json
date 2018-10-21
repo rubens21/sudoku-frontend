@@ -11,8 +11,8 @@
     "sinon": "^7.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "BROWSER=none react-scripts start",
+    "build": "npm install && npm audit fix && npm test && react-scripts build && npm start",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -112,7 +112,7 @@ class App extends Component {
                                onClick={this.refreshBoard}>Reload</button>
     if (error) {
       html = <div className="card mx-auto" id="error">
-        <img className="card-img-top" src={errorImg} alt="Error image"/>
+        <img className="card-img-top" src={errorImg} alt={"Error on loading the board"}/>
         <div className="card-body">
           <h5 className="card-title">Error</h5>
           <p className="card-text">{error.message}</p>
@@ -122,7 +122,7 @@ class App extends Component {
       </div>
 
     } else if (!isLoaded) {
-      html = <div id="loader"><img src={spinner}/><h1>Loading...</h1></div>;
+      html = <div id="loader"><img src={spinner} alt={"Wait while the board is loaded"}/><h1>Loading...</h1></div>;
     } else {
 
       html = <div>{this.renderBoard()}

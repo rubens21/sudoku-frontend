@@ -4,6 +4,8 @@ import spinner from './spinner.gif'
 import errorImg from './error-broken.png'
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import Cell from './Cell';
+
 
 Enzyme.configure({ adapter: new Adapter() });
 const BACKEND = `http://localhost/sudoku/board`;
@@ -14,7 +16,8 @@ class App extends Component {
     this.state = {
       error: props.error !== undefined ? props.error :  null,
       isLoaded: props.isLoaded !== undefined ? props.isLoaded : false,
-      numbers: props.numbers !== undefined ? props.numbers : []
+      numbers: props.numbers !== undefined ? props.numbers : [],
+      activeCell: null
     };
     this.refreshBoard = this.refreshBoard.bind(this);
   }
@@ -33,7 +36,12 @@ class App extends Component {
     let error = {
       message: "Oops! I am good on Sudoku, but I am not that good as a developer :p"
     };
-    return fetch(BACKEND).catch(e => {
+
+    let url = BACKEND;
+    if(this.state.activeCell !== null) {
+      url = `${url}?number=${this.state.activeCell.props.value}&line=${this.state.activeCell.props.line}&col=${this.state.activeCell.props.col}`;
+    }
+    return fetch(url).catch(e => {
       error.message = "The request has failed. Is the backend reachable?";
       throw e
     }).then(res => {
@@ -67,19 +75,28 @@ class App extends Component {
   componentDidMount() {
     this.loadNewBoard()
   }
+  handleClick = (cell) => {
+    if(this.state.activeCell === cell) {
+      this.setState({ activeCell: null });
+    } else {
+      this.setState({ activeCell: cell });
+    }
+  };
+
   renderBoard() {
     let rows = [];
     for (let i = 0; i < 9; i++) {
       // let rowID = `row${i}`;
       let cell = [];
       const indexPot = 9 * i;
-      for (let idx = 0; idx < 9; idx++) {
-        let cellID = `cell${i}-${idx}`;
-        cell.push(<td key={cellID} id={cellID}>
-          <div className="sudoku-number">{this.state.numbers[idx + indexPot]}</div>
-        </td>)
+      for (let col = 0; col < 9; col++) {
+        let cellID = `cell${i}-${col}`;
+        cell.push(
+          <Cell value={this.state.numbers[col + indexPot]} key={cellID} line={i} col={col} id={cellID}
+                isActive={ this.state.activeCell !== null && this.state.activeCell.props.id === cellID } onClick={ this.handleClick } />
+          )
       }
-      rows.push(<tr className="sudoku-box" key={i}>{cell}</tr>)
+      rows.push(<tr key={i}>{cell}</tr>)
     }
     return <table className="table table-bordered" id="sudoku-board">
       <tbody>
@@ -108,9 +125,9 @@ class App extends Component {
       html = <div id="loader"><img src={spinner}/><h1>Loading...</h1></div>;
     } else {
 
-      html = <di>{this.renderBoard()}
+      html = <div>{this.renderBoard()}
         {reloadButton}
-      </di>
+      </div>
 
     }
     return <div className="text-center">{html}</div>;

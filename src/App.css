@@ -30,11 +30,24 @@ background-color: #ced4da;
   background-color: white;
 }
 
-#sudoku-board td .sudoku-number {
-  margin: auto;
+#sudoku-board td {
+  padding: 0;
+  margin: 0;
+}
+#sudoku-board td div {
+  margin: 0;
+  padding: 15px 20px;
   text-align: center;
   display: block;
-  width: 20px;
-  height: 20px;
+  font-size: 20px;
+
+}
+#sudoku-board td div.active {
+  background-color: #dbbba1;
+  transition: background-color .5s;
+}
+#sudoku-board td div:hover {
+  color: red;
+  background-color: #ffddbf;
 }
 

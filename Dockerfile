@@ -6,6 +6,7 @@ COPY package.json /usr/src/app/package.json
 RUN npm install --silent
 RUN npm install react-scripts@1.1.1 -g --silent
 COPY . /usr/src/app
+RUN CI=true npm test
 RUN react-scripts build
 
 # production environment

@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "BROWSER=none react-scripts start",
-    "build": "CI=true npm install  --silent && CI=true npm test && react-scripts build",
+    "build": "CI=true npm install --silent && CI=true npm test && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

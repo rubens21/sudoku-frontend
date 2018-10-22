@@ -14,7 +14,7 @@ to display a Sudoku solved board.
 * [NodeJs](https://nodejs.org/en/download/) >= v8.*
 * [npm](https://www.npmjs.com/get-npm) >= 6.*
 * [nginx](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/#installing-a-prebuilt-ubuntu-package-from-an-ubuntu-repository) >= 1.10.*
-* Sudoku backend
+* Sudoku backend running at `localhost:8080`
 
 ### Set up Nginx
 
@@ -71,6 +71,13 @@ If you want to run the application skipping the test and build steps, use the co
 ```bash
 $ npm start
 ```
+
+## Deploy
+
+Run the script `deploy.sh`. This script will install the dependencies locally, run the tests, build a Docker
+image, and provide you the command to start the container.
+
+**Notce**: You must have the Sudoku running at localhost:8080 and reachable from the front end container.
 
 ## Usage
 Open [http://localhost](http://localhost).

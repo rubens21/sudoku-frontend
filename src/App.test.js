@@ -32,14 +32,15 @@ describe('<App /> render', () => {
   });
 
 });
+
 describe('<App /> renderBoard', () => {
   let number = [];
   for(let i=0;i<81;i++){
     number.push(i)
   }
   it('Should render 81 cells, 9 lines with 9 cells each', () => {
-    const wrapper = shallow(<App isLoaded={true} number={number}/>);
-    const element = shallow(wrapper.instance().renderBoard());
+    const wrapper = shallow(<App isLoaded={true} numbers={number}/>);
+    const element = mount(wrapper.instance().renderBoard());
     expect(element.find('td')).to.have.lengthOf(81);
     expect(element.find('tr')).to.have.lengthOf(9);
     element.find('tr').forEach(e => expect(e.find('td')).to.have.lengthOf(9))
